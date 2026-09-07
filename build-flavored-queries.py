@@ -372,11 +372,9 @@ def main():
         for fm in FLAVOR_MAPPINGS:
             # Remove lines as indicated by directives
             contents = "\n".join(
-                (
-                    line
-                    for line in base_contents.splitlines()
-                    if f"SKIP-{fm.tag}" not in line
-                )
+                line
+                for line in base_contents.splitlines()
+                if f"SKIP-{fm.tag}" not in line
             )
 
             # Delete other directives
@@ -392,7 +390,7 @@ def main():
 
             # Remove trailing whitespace and duplicate newlines
             contents = re.sub(r"[\s;]+$", "", contents)
-            contents = "\n".join((line.rstrip() for line in contents.splitlines()))
+            contents = "\n".join(line.rstrip() for line in contents.splitlines())
             contents = re.sub(r"((?:\r?\n){2,})(?:\r?\n)+", r"\1", contents)
 
             if not contents.endswith("\n"):
@@ -413,17 +411,17 @@ def main():
                     continue
 
                 allowed = fm.allowed_captures[qname]
-                assert (
-                    matched in allowed or matched in ALLOWED_CAPS_ALL
-                ), f"found disallowed query '{matched}' in '{dest}' ({fm.name}). Allowed: {allowed}"
+                assert matched in allowed or matched in ALLOWED_CAPS_ALL, (
+                    f"found disallowed query '{matched}' in '{dest}' ({fm.name}). Allowed: {allowed}"
+                )
 
             # Validate all settings are valid
             for qsetting in re.finditer(r"#set!\s+([\w.-]+)", contents):
                 matched = qsetting[1]
                 allowed = fm.allowed_settings[qname]
-                assert (
-                    matched in allowed
-                ), f"found disallowed setting '{qsetting[0]}' in '{dest}' ({fm.name}). Allowed: {allowed}"
+                assert matched in allowed, (
+                    f"found disallowed setting '{qsetting[0]}' in '{dest}' ({fm.name}). Allowed: {allowed}"
+                )
 
 
 if __name__ == "__main__":

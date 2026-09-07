@@ -1,32 +1,50 @@
-[build-system]
-requires = ["setuptools>=62.4.0", "wheel"]
-build-backend = "setuptools.build_meta"
-
 [project]
-name = "tree-sitter-just"
-description = "Justfiles grammar for tree-sitter"
-version = "0.2.0"
-keywords = ["incremental", "parsing", "tree-sitter", "just"]
-classifiers = [
-  "Intended Audience :: Developers",
-  "Topic :: Software Development :: Compilers",
-  "Topic :: Text Processing :: Linguistic",
-  "Typing :: Typed",
-]
-authors = [{ name = "Anshuman Medhi", email = "amedhi@connect.ust.uk" }]
-requires-python = ">=3.10"
-license.text = "MIT"
-readme = "README.md"
+  name = "tree-sitter-just"
+  version = "0.2.0"
+  description = "Justfiles grammar for tree-sitter"
+  readme = "README.md"
+  keywords = ["incremental", "parsing", "tree-sitter", "just"]
+  authors = [
+    { name = "Anshuman Medhi", email = "amedhi@connect.ust.uk" },
+    { name = "Joseph M Courtney", email = "5942706+josephcourtney@users.noreply.github.com" },
+  ]
+  classifiers = [
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Compilers",
+    "Topic :: Text Processing :: Linguistic",
+    "Typing :: Typed",
+  ]
+  license = "MIT"
+  license-files = ["LICENSE.md"]
+  requires-python = ">=3.14"
 
-[project.urls]
-Homepage = "https://github.com/casey/tree-sitter-just"
+  [project.urls]
+    Homepage      = "https://github.com/josephcourtney/tree-sitter-just"
+    "Bug Tracker" = "https://github.com/josephcourtney/tree-sitter-just/issues"
 
-[project.optional-dependencies]
-core = ["tree-sitter~=0.24"]
+  [project.scripts]
+    wfc = "wfc.command:main"
+
+  [project.optional-dependencies]
+    core = ["tree-sitter~=0.24"]
+
+[build-system]
+  requires      = ["uv_build>=0.10,<0.13"]
+  build-backend = "uv_build"
+
+[tool.uv.build-backend]
+  module-name = "tree_sitter_just"
+  module-root = "bindings/python"
 
 [tool.cibuildwheel]
-build = "cp310-*"
-build-frontend = "build"
+  build          = "cp310-*"
+  build-frontend = "build"
 
 [tool.ruff]
-exclude = [".build", "repositories"]
+  exclude = [".build", "repositories"]
+
+[dependency-groups]
+dev = [
+    "black>=26.5.1",
+    "ruff>=0.16.6",
+]

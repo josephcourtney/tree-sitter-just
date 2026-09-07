@@ -84,6 +84,8 @@ setup *npm-args:
 
 	if which npm > /dev/null; then
 		npm install --include=dev {{ npm-args }}
+		npm rebuild tree-sitter-cli tree-sitter
+		just configure-tree-sitter
 	else
 		echo "npm not found: skipping install"
 	fi

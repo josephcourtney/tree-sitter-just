@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Turn our tests into a corpus for the fuzzer (one test per file)"""
 
-from pathlib import Path
 import re
+from pathlib import Path
 
 RE = r"===+\n(?P<name>.*?)\n===+\n(?P<source>.*?)\n---+"
 REPO = Path(__file__).parent.parent
@@ -16,7 +16,7 @@ def main():
 
     for fname in ts_corpus_files:
         text = fname.read_text()
-        prefix = fname.name.rstrip(".txt")
+        prefix = fname.stem
 
         for match in re.finditer(RE, text, re.MULTILINE | re.DOTALL):
             name = match.group("name").replace(" ", "_")
